@@ -9,4 +9,10 @@ class Node:
 
     def __lt__(self, other):
         return self.heuristic < other.heuristic
-
+def greedy_best_first_search(start, goal, get_neighbors, heuristic):
+    # Priority queue to store the frontier nodes, ordered by the heuristic
+    frontier = []
+    heapq.heappush(frontier, Node(start, heuristic=heuristic(start, goal)))
+    
+    # Set to track visited nodes
+    visited = set()
