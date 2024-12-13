@@ -16,3 +16,21 @@ def greedy_best_first_search(start, goal, get_neighbors, heuristic):
     
     # Set to track visited nodes
     visited = set()
+    while frontier:
+        # Get the node with the lowest heuristic value
+        current_node = heapq.heappop(frontier)
+        current_state = current_node.state
+
+        # If the goal is reached, return the path
+        if current_state == goal:
+            return reconstruct_path(current_node)
+
+        visited.add(current_state)
+
+        # Explore neighbors
+        for neighbor in get_neighbors(current_state):
+            if neighbor not in visited:
+                heuristic_value = heuristic(neighbor, goal)
+                heapq.heappush(frontier, Node(neighbor, current_node, heuristic=heuristic_value))
+
+    return None  # If no path is found
